@@ -3,14 +3,14 @@ This is a sample app of jetpack paging library in kotlin.
 
 
 ## Add the below dependencies in your app level build.gradle file
-```
+```kotlin
 implementation "android.arch.paging:runtime:1.0.1"
 implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
 annotationProcessor "android.arch.lifecycle:compiler:1.1.1"
 ```
 
 ## Create a Data Source class for page keyed content
-```
+```kotlin
 class UserDataSource(private val context: Context) : PageKeyedDataSource<Int, User>() {
 
     override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, User>) {
@@ -74,8 +74,8 @@ class UserDataSource(private val context: Context) : PageKeyedDataSource<Int, Us
 ```
 
 ## Create a DataSource.Factory class for DataSource
-```
-lass UserDataSourceFactory(private val context: Context) : DataSource.Factory<Int, User>() {
+```kotlin
+class UserDataSourceFactory(private val context: Context) : DataSource.Factory<Int, User>() {
 
     val mutableLiveData = MutableLiveData<UserDataSource>()
 
@@ -89,7 +89,7 @@ lass UserDataSourceFactory(private val context: Context) : DataSource.Factory<In
 ```
 
 ## Create a ViewModel class to handle data
-```
+```kotlin
 class UserViewModel(private val context: Context) : ViewModel() {
 
     private var listUsers : LiveData<PagedList<User>> = MutableLiveData<PagedList<User>>()
@@ -119,7 +119,7 @@ class UserViewModel(private val context: Context) : ViewModel() {
 ```
 
 ## Create a ViewModelFactory class to pass custom arguments with ViewModel
-```
+```kotlin
 class UserViewModelFactory(private val context: Context) : ViewModelProvider.NewInstanceFactory() {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
@@ -130,7 +130,7 @@ class UserViewModelFactory(private val context: Context) : ViewModelProvider.New
 ```
 
 ## Create a PagedListAdapter class to display data from PagedList
-```
+```kotlin
 class UsersAdapter(private val context: Context) : PagedListAdapter<User,UsersAdapter.MyViewHolder>(USER_COMPARATOR) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -165,9 +165,9 @@ class UsersAdapter(private val context: Context) : PagedListAdapter<User,UsersAd
 ```
 
 ## Bind data with RecyclerView
-```
+```kotlin
 val userViewModel = ViewModelProvider(this,UserViewModelFactory(this)).get(UserViewModel::class.java)
-        userViewModel.getData().observe(this, object : Observer<PagedList<User>>{
+userViewModel.getData().observe(this, object : Observer<PagedList<User>>{
             override fun onChanged(t: PagedList<User>?) {
                 adapter.submitList(t)
             }
